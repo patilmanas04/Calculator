@@ -1,34 +1,49 @@
 let string = "";
-let buttons = document.querySelectorAll(".button");
+const buttons = document.querySelectorAll(".button");
+const display = document.querySelector(".display")
 
 Array.from(buttons).forEach(function(button){
     button.addEventListener('click', function(e){
         if(e.target.innerHTML === "="){
             if(string===""){
-                document.querySelector(".display").value = "";
+                display.value = "";
             }
             else{
                 string = eval(string);
-                document.querySelector(".display").value = string;
+                display.value = string;
             }
         }
         else if(e.target.innerHTML === "AC"){
             string = "";
-            document.querySelector(".display").value = string;
+            display.value = string;
         }
         else if(e.target.innerHTML === "C"){
             string = string.slice(0, string.length - 1);
-            document.querySelector(".display").value = string;
+            display.value = string;
         }
         else{
             if(e.target.innerHTML==="X"){
                 string = string + "*";
-                document.querySelector(".display").value = string;
+                display.value = string;
             }
             else{
                 string = string + e.target.innerHTML;
-                document.querySelector(".display").value = string;
+                display.value = string;
             }
         }
     });
 });
+
+const calc = document.querySelector(".calc")
+const modeChangeButton = document.querySelector(".app-mode")
+const modeImage = document.querySelector(".mode-image")
+let darkMode = false
+const elementNodesOfCalc = Array.from(calc.childNodes).filter(node => node.nodeType === Node.ELEMENT_NODE)
+modeChangeButton.addEventListener("click", (e) => {
+    elementNodesOfCalc.forEach((element) => {
+        element.classList.toggle("dark-mode")
+        calc.classList.toggle("dark-mode")
+        darkMode = !darkMode
+    })
+    modeImage.src = `./images/${(darkMode)?"dark":"light"}.png`
+})
